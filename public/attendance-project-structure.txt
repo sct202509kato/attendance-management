@@ -1,0 +1,100 @@
+# 勤怠管理システム - React + TypeScript プロジェクト構成
+
+## プロジェクト構造
+
+```
+attendance-management/
+├── public/
+│   └── index.html
+├── src/
+│   ├── components/
+│   │   ├── auth/
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── RegisterForm.tsx
+│   │   ├── attendance/
+│   │   │   ├── ClockInOut.tsx
+│   │   │   ├── AttendanceTable.tsx
+│   │   │   └── TodayStatus.tsx
+│   │   ├── correction/
+│   │   │   ├── CorrectionModal.tsx
+│   │   │   ├── CorrectionList.tsx
+│   │   │   └── CorrectionRequest.tsx
+│   │   ├── admin/
+│   │   │   ├── UserList.tsx
+│   │   │   ├── UserDetail.tsx
+│   │   │   └── MonthlyReportExport.tsx
+│   │   ├── reports/
+│   │   │   └── MonthlyReport.tsx
+│   │   └── common/
+│   │       ├── Header.tsx
+│   │       ├── TabNavigation.tsx
+│   │       └── Loading.tsx
+│   ├── types/
+│   │   ├── user.ts
+│   │   ├── attendance.ts
+│   │   └── correction.ts
+│   ├── services/
+│   │   ├── storage.ts
+│   │   ├── auth.ts
+│   │   ├── attendance.ts
+│   │   ├── correction.ts
+│   │   └── export.ts
+│   ├── utils/
+│   │   ├── dateFormat.ts
+│   │   ├── timeCalculation.ts
+│   │   └── validation.ts
+│   ├── hooks/
+│   │   ├── useAuth.ts
+│   │   ├── useAttendance.ts
+│   │   └── useCorrection.ts
+│   ├── contexts/
+│   │   └── AuthContext.tsx
+│   ├── App.tsx
+│   ├── index.tsx
+│   └── index.css
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+## セットアップ手順
+
+### 1. プロジェクト作成
+
+```bash
+npx create-react-app attendance-management --template typescript
+cd attendance-management
+```
+
+### 2. 必要なパッケージのインストール
+
+```bash
+npm install lucide-react xlsx
+npm install --save-dev @types/node
+```
+
+### 3. 各ファイルの配置
+
+以下のファイルを作成してください。各ファイルの内容は次のセクションに記載されています。
+
+## 注意事項
+
+- このプロジェクトはClaudeのストレージAPIを使用しています
+- 本番環境では、バックエンドAPI（Node.js + Express、Firebase、Supabaseなど）への移行を推奨します
+- パスワードのハッシュ化は簡易的な実装です。本番環境ではbcryptなどを使用してください
+
+## 起動方法
+
+```bash
+npm start
+```
+
+ブラウザで http://localhost:3000 を開いてください。
+
+## ビルド方法
+
+```bash
+npm run build
+```
+
+`build/` フォルダに本番用ファイルが生成されます。
