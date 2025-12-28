@@ -1,54 +1,53 @@
 # Attendance Management App
-React + TypeScript + Firebase を用いた勤怠管理Webアプリ
 
-開発背景：日々の勤怠管理をシンプルに行えるよう、
-React と Firebase を用いた実用的なWebアプリとして開発しました。
+React + TypeScript + Firebase を用いて開発した勤怠管理Webアプリです。  
+フロントエンドから認証・データ管理・セキュリティまでを一通り実装しています。
 
 ## Demo
 https://attendance-management-zl2n.onrender.com
 
-## 概要
-React + TypeScript + Firebase で作成した勤怠管理アプリです。
-（出勤・退勤・休憩管理、勤怠履歴、月次レポートのExcel出力）
+## 画面イメージ
+screenshots/top.png
 
-## アプリ説明
-出勤・退勤・休憩をワンクリックで記録でき、
-日付ごとの勤怠情報を Firestore に保存します。
+## 概要
+個人利用を想定した勤怠管理アプリです。  
+ユーザーはメールアドレスとパスワードで新規登録・ログインし、
+出勤・退勤・休憩の打刻を行うことができます。
+
+認証には Firebase Authentication、データ管理には Firestore を使用し、
+ユーザーごとにデータを安全に分離しています。
 
 ## 主な機能
+- メールアドレス / パスワードによるユーザー認証
 - 出勤 / 退勤の打刻
-- 休憩開始 / 終了
+- 休憩開始 / 休憩終了
 - 日付ごとの勤怠履歴表示
-- 月次レポートのエクスポート（Excel）
-- Firestore とのデータ同期
-- ローカル日付（JST）対応
+- 月次レポートの確認
+- Firestore を用いたユーザーごとのデータ管理
 
 ## 使用技術
 - React
 - TypeScript
-- Firebase (Firestore)
+- Firebase Authentication
+- Firebase Firestore
 - Tailwind CSS
 
-## 工夫した点
-- Firestore / localStorage / state の同期を整理
-- UTC と JST のズレによる日付バグを修正
-- 日付キーをローカル日付で統一
+## データ構成
+users/{uid}/attendanceRecords/{recordId}
 
-## セットアップ
-```bash
-npm install
-npm run dev
-```
+- 勤怠データはユーザー単位で分離して管理
+- Firestore Security Rules により、認証済みユーザー本人のみが読み書き可能
 
-## 📸 スクリーンショット
+## 設計・実装で工夫した点
+- Firebase Authentication に認証情報を集約し、パスワードをアプリ側で保持しない安全な構成
+- Firestore のデータ構造をユーザー単位に分離し、権限管理を明確化
+- UTC と JST のズレを考慮し、ローカル日付（JST）を基準に日付キーを設計
+- 勤務中 / 休憩中 / 退勤済みといった状態をロジックと UI の両面で整合性を保つよう設計
 
-### トップ画面
-![トップ画面](screenshots/top.png)
+## 今後の拡張予定
+- 管理者ユーザーと一般ユーザーの権限分離
+- 勤怠修正申請・承認フローの実装
+- 管理者による勤怠データの確認・修正機能
 
-### 勤怠履歴
-![勤怠履歴](screenshots/attendance.png)
 
-### 月次レポート（Excel出力）
-![月次レポート](screenshots/monthly-report.png)
-※ 画面はローカル開発環境での表示です。
 
