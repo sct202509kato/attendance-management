@@ -1,105 +1,90 @@
 // src/components/attendance/ClockInOut.tsx
-import React, { useState, useEffect } from 'react';
-import { LogIn, LogOut, Coffee, Clock } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { LogIn, LogOut, Clock } from "lucide-react";
 
-interface ClockInOutProps {
-  onClockIn?: () => Promise<void>;
-  onClockOut?: () => Promise<void>;
-  onStartBreak?: () => Promise<void>;
-  onEndBreak?: () => Promise<void>;
-  isWorking?: boolean;
-  isOnBreak?: boolean;
-  todayClockIn?: string | null;
-  todayClockOut?: string | null;
-  disabled?: boolean;
-}
+type ClockInOutProps = {
+  onClockIn: () => void;
+  onClockOut: () => void;
+  onStartBreak: () => void;
+  onEndBreak: () => void;
+  isWorking: boolean;
+  isOnBreak: boolean;
+  todayClockIn: string | null;
+  todayClockOut: string | null;
+};
 
 const ClockInOut: React.FC<ClockInOutProps> = ({
   onClockIn,
   onClockOut,
   onStartBreak,
   onEndBreak,
-  isWorking = false,
-  isOnBreak = false,
-  todayClockIn = null,
-  todayClockOut = null,
-  disabled = false,
+  isWorking,
+  isOnBreak,
+  todayClockIn,
+  todayClockOut,
 }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const handleClockIn = async () => {
+  const formatTime = (dateString: string) =>
+    new Date(dateString).toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" });
+
+  const handleClockIn = () => {
     setLoading(true);
     try {
-      await onClockIn?.();
-    } catch (error) {
-      console.error('出勤エラー:', error);
+      onClockIn();
     } finally {
       setLoading(false);
     }
   };
 
-  const handleClockOut = async () => {
+  const handleClockOut = () => {
     setLoading(true);
     try {
-      await onClockOut?.();
-    } catch (error) {
-      console.error('退勤エラー:', error);
+      onClockOut();
     } finally {
       setLoading(false);
     }
   };
 
-  const handleStartBreak = async () => {
+  const handleStartBreak = () => {
     setLoading(true);
     try {
-      await onStartBreak?.();
-    } catch (error) {
-      console.error('休憩開始エラー:', error);
+      onStartBreak();
     } finally {
       setLoading(false);
     }
   };
 
-  const handleEndBreak = async () => {
+  const handleEndBreak = () => {
     setLoading(true);
     try {
-      await onEndBreak?.();
-    } catch (error) {
-      console.error('休憩終了エラー:', error);
+      onEndBreak();
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('ja-JP', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
   };
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
+
+
       {/* 現在時刻表示 */}
       <div className="text-center mb-6">
         <div className="text-5xl font-bold text-indigo-600 mb-2">
-          {currentTime.toLocaleTimeString('ja-JP')}
+          {currentTime.toLocaleTimeString("ja-JP")}
         </div>
         <div className="text-xl text-gray-600">
-          {currentTime.toLocaleDateString('ja-JP', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            weekday: 'long',
+          {currentTime.toLocaleDateString("ja-JP", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            weekday: "long",
           })}
         </div>
       </div>
@@ -115,45 +100,44 @@ const ClockInOut: React.FC<ClockInOutProps> = ({
             <div>
               <span className="text-gray-600">出勤:</span>
               <span className="ml-2 font-semibold">
-                {todayClockIn ? formatTime(todayClockIn) : '未打刻'}
+                {todayClockIn ? formatTime(todayClockIn) : "未打刻"}
               </span>
             </div>
             <div>
               <span className="text-gray-600">退勤:</span>
               <span className="ml-2 font-semibold">
-                {todayClockOut ? formatTime(todayClockOut) : '未打刻'}
+                {todayClockOut ? formatTime(todayClockOut) : "未打刻"}
               </span>
             </div>
           </div>
+
           {isWorking && (
             <div className="mt-2 text-sm">
               <span
-                className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${
-                  isOnBreak
-                    ? 'bg-orange-100 text-orange-700'
-                    : 'bg-green-100 text-green-700'
-                }`}
+                className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold ${isOnBreak ? "bg-orange-100 text-orange-700" : "bg-green-100 text-green-700"
+                  }`}
               >
-                {isOnBreak ? '休憩中' : '勤務中'}
+                {isOnBreak ? "休憩中" : "勤務中"}
               </span>
             </div>
           )}
         </div>
       )}
 
-      {/* 出勤・退勤ボタン */}
+      {/* 出勤・退勤 */}
       <div className="flex gap-4 justify-center mb-6">
         <button
           onClick={handleClockIn}
-          disabled={isWorking || !!todayClockIn || disabled || loading}
+          disabled={isWorking || !!todayClockIn || loading}
           className="flex items-center gap-2 bg-green-500 hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-8 py-4 rounded-lg font-semibold transition-colors text-lg"
         >
           <LogIn size={24} />
           出勤
         </button>
+
         <button
           onClick={handleClockOut}
-          disabled={!isWorking || disabled || loading}
+          disabled={!isWorking || !!todayClockOut || loading}
           className="flex items-center gap-2 bg-red-500 hover:bg-red-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-8 py-4 rounded-lg font-semibold transition-colors text-lg"
         >
           <LogOut size={24} />
@@ -161,22 +145,21 @@ const ClockInOut: React.FC<ClockInOutProps> = ({
         </button>
       </div>
 
-      {/* 休憩ボタン */}
+      {/* 休憩 */}
       <div className="flex gap-4 justify-center">
         <button
           onClick={handleStartBreak}
-          disabled={!isWorking || isOnBreak || disabled || loading}
-          className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+          disabled={!isWorking || isOnBreak || loading}
+          className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors"
         >
-          <Coffee size={20} />
           休憩開始
         </button>
+
         <button
           onClick={handleEndBreak}
-          disabled={!isWorking || !isOnBreak || disabled || loading}
-          className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+          disabled={!isOnBreak || loading}
+          className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-colors"
         >
-          <Coffee size={20} />
           休憩終了
         </button>
       </div>
