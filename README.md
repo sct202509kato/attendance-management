@@ -3,11 +3,14 @@
 React + TypeScript + Firebase を用いて開発した勤怠管理Webアプリです。  
 フロントエンドから認証・データ管理・セキュリティまでを一通り実装しています。
 
+## デモ動画
+
+※ ログインが必要なアプリのため、操作イメージを動画で紹介しています。
+
+https://github.com/user-attachments/assets/ea20c33e-6aba-44bc-ae9a-281c195e8286
+
 ## Demo
 https://attendance-management-zl2n.onrender.com
-
-## 画面イメージ
-![トップ画面](screenshots/top.png)
 
 ## 概要
 個人利用を想定した勤怠管理アプリです。  
