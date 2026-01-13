@@ -1,4 +1,4 @@
-# Attendance Management App
+# 勤怠管理アプリ
 
 React + TypeScript + Firebase を用いて開発した勤怠管理Webアプリです。  
 フロントエンドから認証・データ管理・セキュリティまでを一通り実装しています。
