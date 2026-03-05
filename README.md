@@ -1,5 +1,13 @@
 # 勤怠管理アプリ
 
+## 3行まとめ
+- React + TypeScript + Firebase で作成した勤怠管理Webアプリ
+- 認証（Auth）/ データ分離（Firestore）/ 権限（Security Rules）まで一通り実装
+- UTC↔JSTのズレを考慮した「日付キー設計」で勤怠の整合性を担保
+
+## Screenshots
+![画面](./screenshots/top.png)
+
 React + TypeScript + Firebase を用いて開発した勤怠管理Webアプリです。  
 フロントエンドから認証・データ管理・セキュリティまでを一通り実装しています。
 
